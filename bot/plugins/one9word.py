@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 import re, logging, random, nltk
-from info import TG_NAME
+from info import TG_NAME, PREFIX
 
 logging.basicConfig(level=logging.INFO)
 
