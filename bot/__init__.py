@@ -5,5 +5,7 @@ TelegramBot = Client(
   name="TeleBot",
   api_id=API_ID,
   api_hash=API_HASH,
-  session_string=SESSION
+  session_string=SESSION,
+  plugins={"root": "bot/plugins"},
+  workers = 10
 )
