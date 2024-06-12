@@ -7,29 +7,29 @@ from pyrogram import Client, filters, enums
 async def help_cmd(_, message):
     await message.edit_text(
         f"**Commands**\n\n"
-        "`.ping` - Check the bot's ping\n"
-        "`.urban or .ud <word>` - Get the urban dictionary meaning of the word\n"
-        "`.meaning or .m <word>` - Get the meaning of the word\n"
-        "`.emoji or .e <emoji>` - To generate emoji text\n"
-        "`.facts or .f` - Get random facts\n"
-        "`.quotes or .q` - Get random quotes\n"
-        "`.ask or .a <question>` - Ask a question\n"
-        "`.pfq` - Change your profile picture with random quotes\n"
-        "`.bio` - Change your bio with random quotes\n"
-        "`.imgq` - Generate image with random quotes\n"
-        "`.telegraph` - Create a telegraph post\n"
-        "`.song <song name | song url>` - Download song from youtube\n"
-        "`.video <video url>` - Download video from youtube\n"
-        "`.spam <number> <text>` - Spam the text\n"
-        "`.on9 <on | off>` - To activate One9word game cheat\n"
-        "`.approve` - Approve all joinRequest\n"
-        "`.clearchat` - Delete all chat message from your group\n"
-        "`.update` - Deploy the latest changes\n"
-        "`.dl` - download from http url\n"
-        "`.hack` - Hack animation\n",
+        f"`{PREFIX}ping` - Check the bot's ping\n"
+        f"`{PREFIX}urban or .ud <word>` - Get the urban dictionary meaning of the word\n"
+        f"`{PREFIX}meaning or .m <word>` - Get the meaning of the word\n"
+        f"`{PREFIX}emoji or {PREFIX}e <emoji>` - To generate emoji text\n"
+        f"`{PREFIX}facts or {PREFIX}f` - Get random facts\n"
+        f"`{PREFIX}quotes or {PREFIX}q` - Get random quotes\n"
+        f"`{PREFIX}ask or {PREFIX}a <question>` - Ask a question\n"
+        f"`{PREFIX}pfq` - Change your profile picture with random quotes\n"
+        f"`{PREFIX}bio` - Change your bio with random quotes\n"
+        f"`{PREFIX}iquotes` - Generate image with random quotes\n"
+        f"`{PREFIX}telegraph` - Create a telegraph post\n"
+        f"`{PREFIX}song <song name | song url>` - Download song from youtube\n"
+        f"`{PREFIX}video <video url>` - Download video from youtube\n"
+        f"`{PREFIX}spam or {PREFIX}s <number> <text>` - Spam the text\n"
+        f"`{PREFIX}on9 <on | off>` - To activate One9word game cheat\n"
+        f"`{PREFIX}approve` - Approve all joinRequest\n"
+        f"`{PREFIX}clearchat` - Delete all chat message from your group\n"
+        f"`{PREFIX}update` - Deploy the latest changes\n"
+        f"`{PREFIX}dl` - download from http url\n"
+        f"`{PREFIX}hack` - Hack animation\n",
+        f"`{PREFIX}action <t | p | s | cs | ea | up>` - Start action\n",
         parse_mode=enums.ParseMode.MARKDOWN
     )
-
 
 @Client.on_message(filters.command("ping", PREFIX) & filters.me)   
 async def ping(_, message):
