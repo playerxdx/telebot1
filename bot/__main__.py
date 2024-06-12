@@ -2,7 +2,7 @@ import logging, os
 from pyrogram import Client
 from info import API_ID, API_HASH, SESSION
 from aiohttp import web
-
+import asyncio
 
 routes = web.RouteTableDef()
 
@@ -42,4 +42,4 @@ class Bot(Client):
         logging.info("Bot stopped.")
     
 app = Bot()
-app.run()
+asyncio.run(app.start())
