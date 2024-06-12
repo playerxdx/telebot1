@@ -28,7 +28,7 @@ async def help_cmd(_, message):
         f"`{PREFIX}dl` - download from http url\n"
         f"`{PREFIX}hack` - Hack animation\n",
         f"`{PREFIX}action <t | p | s | cs | ea | up>` - Start action\n",
-        parse_mode=enums.ParseMode.MARKDOWN
+        parse_mode=enums.ParseMode.HTML
     )
 
 @Client.on_message(filters.command("ping", PREFIX) & filters.me)   
