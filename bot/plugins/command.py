@@ -26,9 +26,9 @@ async def help_cmd(_, message):
         f"`{PREFIX}deletechat` - Delete all chat message from your group\n"
         f"`{PREFIX}update` - Deploy the latest changes\n"
         f"`{PREFIX}dl` - download from http url\n"
-        f"`{PREFIX}hack` - Hack animation\n",
+        f"`{PREFIX}hack` - Hack animation\n"
         f"`{PREFIX}action <t | p | s | cs | ea | up>` - Start action\n",
-        parse_mode=enums.ParseMode.HTML
+        parse_mode=enums.ParseMode.MARKDOWN
     )
 
 @Client.on_message(filters.command("ping", PREFIX) & filters.me)   
