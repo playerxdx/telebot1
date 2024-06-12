@@ -3,6 +3,7 @@ import requests, textwrap, aiohttp, logging, asyncio
 from io import BytesIO
 from pyrogram import Client, filters
 from info import PREFIX
+from bot import TelegramBot
 
 def add_quote_to_image(image_url, quote, output_path='output_image.jpg'):
     try:
@@ -86,7 +87,7 @@ async def set_profile_photo(client):
         return False
 
 # Command to change profile picture
-@Client.on_message(filters.command("pfq", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("pfq", PREFIX) & filters.me)
 async def change_pfp(client, message):
     try:
         m = await message.edit("Changing profile pic...")
@@ -102,7 +103,7 @@ async def change_pfp(client, message):
         logging.error(f"An error occurred: {e}")
 
         
-@Client.on_message(filters.command("imgq", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("imgq", PREFIX) & filters.me)
 async def image_quote(client, message):
     try:
         m = await message.edit("Fetching image quote...")
@@ -118,12 +119,12 @@ async def image_quote(client, message):
         await message.edit(f"An error occurred: {e}")
         logging.error(f"An error occurred: {e}")
 
-@Client.on_message(filters.command(["quotes", "q", "quote"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["quotes", "q", "quote"], PREFIX) & filters.me)
 async def get_quote(_, message):
     quotes = await get_quotes()
     await message.edit(f"{quotes}")
 
-@Client.on_message(filters.command("bio", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("bio", PREFIX) & filters.me)
 async def change_bio(client, message):
     try:
         msg = await message.edit("Changing bio...")

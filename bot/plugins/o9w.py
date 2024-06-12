@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 import re, logging, random, nltk
 from info import TG_NAME, PREFIX
+from bot import TelegramBot
 
 logging.basicConfig(level=logging.INFO)
 
@@ -13,7 +14,7 @@ starting_letter_pattern = r"start with ([A-Z])"
 min_length_pattern = r"include at least (\d+) letters"
 
 
-@Client.on_message(filters.command("on9", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("on9", PREFIX) & filters.me)
 async def one9word(client, message):
     global ONE9
     global used_words
@@ -28,7 +29,7 @@ async def one9word(client, message):
             used_words.clear()  # Clear the used words when ONE9 is False
 
 
-@Client.on_message(filters.text)
+@TelegramBot.on_message(filters.text)
 async def handle_incoming_message(client, message):
     global ONE9
     global used_words

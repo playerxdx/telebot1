@@ -1,9 +1,10 @@
 import time, asyncio, aiohttp, os, sys
 from info import DEPLOY_HOOK, PREFIX
 from pyrogram import Client, filters, enums
+from bot import TelegramBot
 
 
-@Client.on_message(filters.command(["help", "h"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["help", "h"], PREFIX) & filters.me)
 async def help_cmd(_, message):
     await message.edit_text(
         f"**Commands**\n\n"
@@ -31,7 +32,7 @@ async def help_cmd(_, message):
         parse_mode=enums.ParseMode.MARKDOWN
     )
 
-@Client.on_message(filters.command("ping", PREFIX) & filters.me)   
+@TelegramBot.on_message(filters.command("ping", PREFIX) & filters.me)   
 async def ping(_, message):
     start = time.time()  
     m = await message.edit("Pong!")
@@ -49,7 +50,7 @@ action_dict = {
     'u': enums.ChatAction.UPLOAD_PHOTO
 }
 
-@Client.on_message(filters.command("action", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("action", PREFIX) & filters.me)
 async def send_action(client, message):
     global action_on, action_type
     if len(message.text.split()) > 1:
@@ -63,7 +64,7 @@ async def send_action(client, message):
             await client.send_chat_action(message.chat.id, action_dict[action_type])
             await asyncio.sleep(5)
         
-@Client.on_message(filters.command(["spam", "s"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["spam", "s"], PREFIX) & filters.me)
 async def spam_message(_, message):
     _, *text_parts = message.text.split()
     await message.delete()
@@ -78,14 +79,14 @@ async def spam_message(_, message):
             await message.reply_text(text)
             await asyncio.sleep(0.1)
 
-@Client.on_message(filters.command("restart", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("restart", PREFIX) & filters.me)
 async def restart_services(_, message):
     msg = await message.edit(text="**Process stoped, bot is restarting...**")       
     await asyncio.sleep(3)
     await msg.edit("**Bot restarted**")
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-@Client.on_message(filters.command("update", PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command("update", PREFIX) & filters.me)
 async def deploy_bot(_, message):
     m = await message.edit("Deploying the latest changes...")
     await asyncio.sleep(2)

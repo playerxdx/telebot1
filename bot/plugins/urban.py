@@ -2,8 +2,9 @@ import asyncio
 from pyrogram import Client, filters, enums
 from info import PREFIX
 import aiohttp
+from bot import TelegramBot
 
-@Client.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
 async def facts(_, message):
     data = await get_json(f"https://nekos.life/api/v2/fact")
     fact = data.get('fact')
@@ -11,7 +12,7 @@ async def facts(_, message):
         await message.edit(f"Something went wrong!")
     await message.edit(f"{fact}")
 
-@Client.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
 async def urban(_, message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
@@ -32,7 +33,7 @@ async def urban(_, message):
         await m.edit(text="`The Urban Dictionary API could not be reached`")
 
 
-@Client.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
 async def meaning(_, message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")

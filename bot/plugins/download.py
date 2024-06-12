@@ -3,8 +3,9 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from urllib.parse import urlparse
 from info import PREFIX
+from bot import TelegramBot
 
-@Client.on_message(filters.command(["download", "dl"], PREFIX) & filters.me)
+@TelegramBot.on_message(filters.command(["download", "dl"], PREFIX) & filters.me)
 async def download(client, message):
     url = None
     if message.reply_to_message:
