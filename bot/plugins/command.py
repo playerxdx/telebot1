@@ -43,9 +43,7 @@ action_type = None
 action_dict = {
     't': enums.ChatAction.TYPING,
     'p': enums.ChatAction.PLAYING,
-    's': enums.ChatAction.SPEAKING,
     'c': enums.ChatAction.CHOOSE_STICKER,
-    'u': enums.ChatAction.UPLOAD_PHOTO
 }
 
 @Client.on_message(filters.command("action", PREFIX) & filters.me)
