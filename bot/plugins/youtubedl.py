@@ -50,7 +50,7 @@ async def song_cmd(_, message):
         os.remove(thumb_name)
 
 @Client.on_message(filters.command(['video', 'mp4'], PREFIX) & filters.me)
-async def vsong_cmd(_, message: Message):
+async def vsong_cmd(client, message: Message):
     try:
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
         if not urlissed:
