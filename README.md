@@ -15,7 +15,7 @@ TeleBot is a powerful, feature-rich Telegram Userbot designed to extend the func
 2. Navigate to the project directory: `cd TeleBot`
 3. Install the required dependencies: `pip install -r requirements.txt`
 4. `info.py` fill it with your details.
-5. Run the bot: `python3 bot.py`
+5. Run the bot: `python3 -m bot`
 
 ## Usage
 
