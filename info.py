@@ -5,5 +5,5 @@ API_HASH = os.getenv("API_HASH")
 SESSION = os.getenv("SESSION")
 GENAI_API_KEY = os.getenv("GENAI_API_KEY")
 TG_NAME = os.getenv("TG_NAME") # Your Telegram Name
-DEPLOY_HOOK = os.getenv("DEPLOY_HOOK")
-PREFIX = os.getenv("PREFIX", ".")
+DEPLOY_HOOK = os.getenv("DEPLOY_HOOK") # Get it from render.com if you are hosting this bot to RENDER 
+PREFIX = os.getenv("PREFIX", ".") 
