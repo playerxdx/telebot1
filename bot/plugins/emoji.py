@@ -1,7 +1,6 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from info import PREFIX
-from bot import TelegramBot
+
 
 emojis = [
     "⁭\n                    💖\n                  💖💖\n               💖💖💖\n            💖💖 💖💖\n          💖💖    💖💖\n        💖💖       💖💖\n      💖💖💖💖💖💖\n     💖💖💖💖💖💖💖\n   💖💖                 💖💖\n  💖💖                    💖💖\n💖💖                       💖💖\n",
@@ -54,8 +53,8 @@ def convert_to_emoji(text):
     return result
 
 
-@TelegramBot.on_message(filters.command(["emoji", "e"], PREFIX) & filters.me)
-async def emoji(client: Client, message: Message):
+@Client.on_message(filters.command(["emoji", "e"], PREFIX) & filters.me)
+async def emoji(client, message):
     if len(message.command) < 2:
         await message.reply("Usage: `.emoji <text>`")
         return

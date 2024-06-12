@@ -1,20 +1,19 @@
 import asyncio
 from pyrogram import Client, filters, enums
-from pyrogram.types import Message
 from info import PREFIX
 import aiohttp
-from bot import TelegramBot
 
-@TelegramBot.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
-async def facts(client: Client, message: Message):
+
+@Client.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
+async def facts(client, message):
     data = await get_json(f"https://nekos.life/api/v2/fact")
     fact = data.get('fact')
     if not fact:
         await message.edit(f"Something went wrong!")
     await message.edit(f"{fact}")
 
-@TelegramBot.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
-async def urban(client: Client, message: Message):
+@Client.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
+async def urban(client, message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     try:
@@ -34,8 +33,8 @@ async def urban(client: Client, message: Message):
         await m.edit(text="`The Urban Dictionary API could not be reached`")
 
 
-@TelegramBot.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
-async def meaning(client: Client, message: Message):
+@Client.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
+async def meaning(client, message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     await asyncio.sleep(2)

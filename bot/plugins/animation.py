@@ -1,12 +1,11 @@
 import asyncio, random
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from info import PREFIX
-from bot import TelegramBot
 
 
-@TelegramBot.on_message(filters.command("hack", PREFIX) & filters.me)
-async def hack_cmd(client: Client, message: Message):    
+
+@Client.on_message(filters.command("hack", PREFIX) & filters.me)
+async def hack_cmd(client, message):    
     await message.edit_text("🕵️‍♀️ Initializing Penetration Test...")
     await asyncio.sleep(2)
     await message.edit_text("🔍 Searching for Telegram databases in targeted person's device...")
@@ -65,8 +64,8 @@ async def hack_cmd(client: Client, message: Message):
         "🎯 Targeted Account Hacked...!\n\n✅ File has been successfully uploaded to my server.\nTelegram Database:\n`./DOWNLOADS/tdata.DBI`"
     )
 
-@TelegramBot.on_message(filters.command("scan", PREFIX) & filters.me)
-async def scan_cmd(client: Client, message: Message):
+@Client.on_message(filters.command("scan", PREFIX) & filters.me)
+async def scan_cmd(client, message):
     await message.edit_text("Initializing system scan...")
     await asyncio.sleep(2)
     await message.edit_text(
@@ -109,8 +108,8 @@ async def scan_cmd(client: Client, message: Message):
     await asyncio.sleep(5)
     await message.delete()
 
-@TelegramBot.on_message(filters.command("ily", PREFIX) & filters.me)
-async def ily_cmd(client: Client, message: Message):
+@Client.on_message(filters.command("ily", PREFIX) & filters.me)
+async def ily_cmd(client, message):
     emojis = ["❤️", "🌹", "💫", "🎉", "💖"]
     texts = ["I", "Love", "You"]
     for text in texts:
@@ -154,8 +153,8 @@ hearts = {
     """
 }
 
-@TelegramBot.on_message(filters.command("heart", PREFIX) & filters.me)
-async def heart_cmd(client: Client, message: Message):
+@Client.on_message(filters.command("heart", PREFIX) & filters.me)
+async def heart_cmd(client, message):
     command = message.text.split()
     if len(command) < 2:
         await message.edit("Please provide a heart number.")

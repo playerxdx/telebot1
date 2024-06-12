@@ -2,14 +2,13 @@ import os
 import logging
 from telegraph import upload_file
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from info import PREFIX
-from bot import TelegramBot
+
 
 logging.basicConfig(level=logging.ERROR)
 
-@TelegramBot.on_message(filters.command("telegraph", PREFIX) & filters.me)
-async def telegraph(client: Client, message: Message):
+@Client.on_message(filters.command("telegraph", PREFIX) & filters.me)
+async def telegraph(client, message):
     if not message.reply_to_message:
         await message.edit('Reply to a message with .telegraph')
         return

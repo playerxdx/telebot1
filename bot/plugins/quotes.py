@@ -2,9 +2,8 @@ from PIL import Image, ImageDraw, ImageFont
 import requests, textwrap, aiohttp, logging, asyncio
 from io import BytesIO
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from info import PREFIX
-from bot import TelegramBot
+
 
 def add_quote_to_image(image_url, quote, output_path='output_image.jpg'):
     try:
@@ -88,8 +87,8 @@ async def set_profile_photo(client):
         return False
 
 # Command to change profile picture
-@TelegramBot.on_message(filters.command("pfq", PREFIX) & filters.me)
-async def change_pfp(client: Client, message: Message):
+@Client.on_message(filters.command("pfq", PREFIX) & filters.me)
+async def change_pfp(client, message):
     try:
         m = await message.edit("Changing profile pic...")
         success = await set_profile_photo(client)
@@ -104,8 +103,8 @@ async def change_pfp(client: Client, message: Message):
         logging.error(f"An error occurred: {e}")
 
         
-@TelegramBot.on_message(filters.command("imgq", PREFIX) & filters.me)
-async def image_quote(client: Client, message: Message):
+@Client.on_message(filters.command("imgq", PREFIX) & filters.me)
+async def image_quote(client, message):
     try:
         m = await message.edit("Fetching image quote...")
         quotes = await get_quotes()
@@ -120,12 +119,12 @@ async def image_quote(client: Client, message: Message):
         await message.edit(f"An error occurred: {e}")
         logging.error(f"An error occurred: {e}")
 
-@TelegramBot.on_message(filters.command(["quotes", "q", "quote"], PREFIX) & filters.me)
-async def get_quote(client: Client, message: Message):
+@Client.on_message(filters.command(["quotes", "q", "quote"], PREFIX) & filters.me)
+async def get_quote(client, message):
     quotes = await get_quotes()
     await message.edit(f"{quotes}")
 
-@TelegramBot.on_message(filters.command("bio", PREFIX) & filters.me)
+@Client.on_message(filters.command("bio", PREFIX) & filters.me)
 async def change_bio(client, message):
     try:
         msg = await message.edit("Changing bio...")

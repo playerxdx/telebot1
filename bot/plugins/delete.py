@@ -1,13 +1,12 @@
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
-from pyrogram.types import Message
 import asyncio
 from info import PREFIX
-from bot import TelegramBot
+
 
 # command to delete all messages
-@TelegramBot.on_message(filters.me & filters.command("deletechat", PREFIX) & filters.reply)
-async def clearchat(client: Client, message: Message):
+@Client.on_message(filters.me & filters.command("deletechat", PREFIX) & filters.reply)
+async def clearchat(client, message):
     chat_id = message.chat.id
 
     # send msg to show that bot is working

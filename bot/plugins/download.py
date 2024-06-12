@@ -1,13 +1,12 @@
 import os, re, mimetypes, requests, asyncio, time
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
-from pyrogram.types import Message
 from urllib.parse import urlparse
 from info import PREFIX
-from bot import TelegramBot
 
-@TelegramBot.on_message(filters.command(["download", "dl"], PREFIX) & filters.me)
-async def download(client: Client, message: Message):
+
+@Client.on_message(filters.command(["download", "dl"], PREFIX) & filters.me)
+async def download(client, message):
     url = None
     if message.reply_to_message:
         url = message.reply_to_message.text
