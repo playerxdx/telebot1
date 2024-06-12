@@ -1,14 +1,12 @@
-import os, re, mimetypes
-import requests
-import asyncio
+import os, re, mimetypes, requests, asyncio, time
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from urllib.parse import urlparse
-import time
+from info import PREFIX
 
 
 
-@Client.on_message(filters.command(["download", "dl"], prefixes=".") & filters.me)
+@Client.on_message(filters.command(["download", "dl"], PREFIX) & filters.me)
 async def download(client, message):
     url = None
     if message.reply_to_message:

@@ -1,7 +1,9 @@
-import aiohttp
 import asyncio
-from pyrogram import enums
+from pyrogram import Client, filters, enums
+from bot.plugins.json import get_json
+from info import PREFIX
 
+@Client.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
 async def urban(message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
@@ -21,6 +23,8 @@ async def urban(message):
     except Exception as e:
         await m.edit(text="`The Urban Dictionary API could not be reached`")
 
+
+@Client.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
 async def meaning(message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
@@ -73,10 +77,3 @@ def replacetext(text):
             "",
         )
     )
-
-async def get_json(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.json()
-
-

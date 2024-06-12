@@ -1,6 +1,6 @@
 import google.generativeai as genai
 from pyrogram import Client, filters
-from info import GENAI_API_KEY
+from info import GENAI_API_KEY, PREFIX
 
 genai.configure(api_key=GENAI_API_KEY)
 
@@ -41,7 +41,7 @@ def gemini(text):
         return f"Error generating text: {str(e)}"
 
 
-@Client.on_message(filters.command(["ask", "a"], prefixes="/") & filters.me)
+@Client.on_message(filters.command(["ask", "a"], PREFIX) & filters.me)
 async def ask(_, message):
     try:
         text = message.text.split(None, 1)[1]

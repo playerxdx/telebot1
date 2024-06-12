@@ -2,7 +2,19 @@ import logging, os
 from pyrogram import Client
 from info import API_ID, API_HASH, SESSION
 from aiohttp import web
-from plugins.route import web_server
+
+
+routes = web.RouteTableDef()
+
+@routes.get("/", allow_head=True)
+async def root_route_handler(request):
+    raise web.HTTPFound(f"https://telegram.me/MeeRazi")
+
+async def web_server():
+    web_app = web.Application(client_max_size=30000000)
+    web_app.add_routes(routes)
+    return web_app
+
 
 class Bot(Client):
 
@@ -13,7 +25,7 @@ class Bot(Client):
             api_hash=API_HASH,
             session_string=SESSION,
             workers=100,
-            plugins={"root": "plugins"}
+            plugins={"root": "bot"}
         )
 
     async def start(self):

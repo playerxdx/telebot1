@@ -1,6 +1,11 @@
 import asyncio, random
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from info import PREFIX
 
-async def hack_fn(message):
+
+@Client.on_message(filters.command("hack", PREFIX) & filters.me)
+async def hack_cmd(client: Client, message: Message):    
     await message.edit_text("🕵️‍♀️ Initializing Penetration Test...")
     await asyncio.sleep(2)
     await message.edit_text("🔍 Searching for Telegram databases in targeted person's device...")
@@ -59,7 +64,8 @@ async def hack_fn(message):
         "🎯 Targeted Account Hacked...!\n\n✅ File has been successfully uploaded to my server.\nTelegram Database:\n`./DOWNLOADS/tdata.DBI`"
     )
 
-async def scan_fn(message):
+@Client.on_message(filters.command("scan", PREFIX) & filters.me)
+async def scan_cmd(client: Client, message: Message):
     await message.edit_text("Initializing system scan...")
     await asyncio.sleep(2)
     await message.edit_text(
@@ -102,8 +108,8 @@ async def scan_fn(message):
     await asyncio.sleep(5)
     await message.delete()
 
-
-async def ily(message):
+@Client.on_message(filters.command("ily", PREFIX) & filters.me)
+async def ily_cmd(client: Client, message: Message):
     emojis = ["❤️", "🌹", "💫", "🎉", "💖"]
     texts = ["I", "Love", "You"]
     for text in texts:
@@ -113,42 +119,41 @@ async def ily(message):
     await message.edit("❤️ I 🌹 Love 💫 You 🎉 <3 💖")
     await asyncio.sleep(3)
 
-heart = """
-ㅤ⠀⠀⠀⠀    ⠀⢀⣤⣄
-⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⡆ ⣠⣶⣿⣶⡀
-⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏
-⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⠋
-⠀⠀⠀⠀⣾⣿⣿⣧⠀⠻⣿⣿⠿⠉
-⣰⣿⣿⣿⣿⣿⣿⣿
-⠸⣿⣿⣿⣿⣿⣿⠏
-⠀⠈⠛⠿⣿⣿⡟
-"""
 
-heart1 = """
-⠀⠀⠀⠀⣀⡤⢤⣄⠀⣠⡤⣤⡀⠀⠀⠀
-⠀⠀⢀⣴⢫⠞⠛⠾⠺⠟⠛⢦⢻⣆⠀⠀
-⠀⠀⣼⢇⣻⡀⠀⠀⠀⠀⠀⢸⡇⢿⣆⠀
-⠀⢸⣯⢦⣽⣷⣄⡀⠀⢀⣴⣿⣳⣬⣿⠀
-⢠⡞⢩⣿⠋⠙⠳⣽⢾⣯⠛⠙⢹⣯⠘⣷
-⠀⠈⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠋⠁
-"""
-heart2 = """
-🌑🌑🌑🌑🌑🌑🌑🌑🌑🌑🌑
-🌑🌒🌕🌕🌘🌑🌒🌕🌕🌘🌑
-🌑🌔🌕🌕🌕🌑🌕🌕🌕🌖🌑
-🌑🌕🌕🌕🌕🌕🌕🌕🌕🌕🌑
-🌑🌔🌕🌕🌕🌕🌕🌕🌕🌖🌑
-🌑🌒🌕🌕🌕🌕🌕🌕🌕🌘🌑
-🌑🌑🌒🌕🌕🌕🌕🌕🌘🌑🌑
-🌑🌑🌑🌒🌕🌕🌕🌘🌑🌑🌑
-🌑🌑🌑🌑🌒🌕🌘🌑🌑🌑🌑
-"""
+hearts = {
+    "1": """
+    ㅤ⠀⠀⠀⠀    ⠀⢀⣤⣄
+    ⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⡆ ⣠⣶⣿⣶⡀
+    ⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    ⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏
+    ⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⠋
+    ⠀⠀⠀⠀⣾⣿⣿⣧⠀⠻⣿⣿⠿⠉
+    ⣰⣿⣿⣿⣿⣿⣿⣿
+    ⠸⣿⣿⣿⣿⣿⣿⠏
+    ⠀⠈⠛⠿⣿⣿⡟
+    """,
+    "2": """
+    ⠀⠀⠀⠀⣀⡤⢤⣄⠀⣠⡤⣤⡀⠀⠀⠀
+    ⠀⠀⢀⣴⢫⠞⠛⠾⠺⠟⠛⢦⢻⣆⠀⠀
+    ⠀⠀⣼⢇⣻⡀⠀⠀⠀⠀⠀⢸⡇⢿⣆⠀
+    ⠀⢸⣯⢦⣽⣷⣄⡀⠀⢀⣴⣿⣳⣬⣿⠀
+    ⢠⡞⢩⣿⠋⠙⠳⣽⢾⣯⠛⠙⢹⣯⠘⣷
+    ⠀⠈⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠋⠁
+    """,
+    "3": """
+    🌑🌑🌑🌑🌑🌑🌑🌑🌑🌑🌑
+    🌑🌒🌕🌕🌘🌑🌒🌕🌕🌘🌑
+    🌑🌔🌕🌕🌕🌑🌕🌕🌕🌖🌑
+    🌑🌕🌕🌕🌕🌕🌕🌕🌕🌕🌑
+    🌑🌔🌕🌕🌕🌕🌕🌕🌕🌖🌑
+    🌑🌒🌕🌕🌕🌕🌕🌕🌕🌘🌑
+    🌑🌑🌒🌕🌕🌕🌕🌕🌘🌑🌑
+    🌑🌑🌑🌒🌕🌕🌕🌘🌑🌑🌑
+    🌑🌑🌑🌑🌒🌕🌘🌑🌑🌑🌑
+    """
+}
 
-async def heart_fn(c, msg):
-    if c == 1:
-        await msg.edit(heart)
-    elif c == 2:
-        await msg.edit(heart1)
-    else:
-        await msg.edit(heart2)    
+@Client.on_message(filters.command("heart", PREFIX) & filters.me)
+async def heart_cmd(client: Client, message: Message):
+    number = message.text.split(" ")[1]
+    await message.edit(hearts.get(number, hearts["3"]))

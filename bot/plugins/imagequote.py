@@ -2,9 +2,10 @@ from PIL import Image, ImageDraw, ImageFont
 import requests
 from io import BytesIO
 import textwrap
-import logging
-from plugins.quotes import get_quotes
-import logging
+from bot.plugins.quotes import get_quotes
+import logging, asyncio
+from pyrogram import Client, filters
+from info import PREFIX
 
 def add_quote_to_image(image_url, quote, output_path='output_image.jpg'):
     try:
@@ -87,3 +88,35 @@ async def set_profile_photo(client):
         logging.error(f"An error occurred: {e}")
         return False
 
+# Command to change profile picture
+@Client.on_message(filters.command("pfq", PREFIX) & filters.me)
+async def change_pfp(client, message):
+    try:
+        m = await message.edit("Changing profile pic...")
+        success = await set_profile_photo(client)
+        if success:
+            await m.edit_text("Profile picture has been changed successfully")
+        else:
+            await m.edit_text("Failed to change profile picture")
+        await asyncio.sleep(30)
+        await m.delete()
+    except Exception as e:
+        await message.edit(f"An error occurred: {e}")
+        logging.error(f"An error occurred: {e}")
+
+        
+@Client.on_message(filters.command("imgq", PREFIX) & filters.me)
+async def image_quote(client, message):
+    try:
+        m = await message.edit("Fetching image quote...")
+        quotes = await get_quotes()
+        if quotes:
+            IMAGE_URL = "https://source.unsplash.com/random/800x600"
+            photo_path = add_quote_to_image(IMAGE_URL, quotes)
+            if photo_path:
+                await client.send_photo(message.chat.id, photo=photo_path)
+                await m.delete()
+                return
+    except Exception as e:
+        await message.edit(f"An error occurred: {e}")
+        logging.error(f"An error occurred: {e}")

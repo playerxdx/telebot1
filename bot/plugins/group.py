@@ -1,6 +1,7 @@
 from pyrogram import Client, filters, enums
+from info import PREFIX
 
-@Client.on_message(filters.command("leave", prefixes=".") & filters.me)
+@Client.on_message(filters.command("leave", PREFIX) & filters.me)
 async def leave(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -8,7 +9,7 @@ async def leave(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("kick", prefixes=".") & filters.me)
+@Client.on_message(filters.command("kick", PREFIX) & filters.me)
 async def kick(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -16,7 +17,7 @@ async def kick(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("ban", prefixes=".") & filters.me)
+@Client.on_message(filters.command("ban", PREFIX) & filters.me)
 async def ban(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -24,7 +25,7 @@ async def ban(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("unban", prefixes=".") & filters.me)
+@Client.on_message(filters.command("unban", PREFIX) & filters.me)
 async def unban(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -32,7 +33,7 @@ async def unban(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("promote", prefixes=".") & filters.me)
+@Client.on_message(filters.command("promote", PREFIX) & filters.me)
 async def promote(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -40,7 +41,7 @@ async def promote(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("demote", prefixes=".") & filters.me)
+@Client.on_message(filters.command("demote", PREFIX) & filters.me)
 async def demote(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -48,7 +49,7 @@ async def demote(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("pin", prefixes=".") & filters.me)
+@Client.on_message(filters.command("pin", PREFIX) & filters.me)
 async def pin(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -56,7 +57,7 @@ async def pin(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("unpin", prefixes=".") & filters.me)
+@Client.on_message(filters.command("unpin", PREFIX) & filters.me)
 async def unpin(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -64,7 +65,7 @@ async def unpin(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("mute", prefixes=".") & filters.me)
+@Client.on_message(filters.command("mute", PREFIX) & filters.me)
 async def mute(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -72,7 +73,7 @@ async def mute(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("unmute", prefixes=".") & filters.me)
+@Client.on_message(filters.command("unmute", PREFIX) & filters.me)
 async def unmute(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -80,7 +81,7 @@ async def unmute(client, message):
     except Exception as e:
         await message.edit_text(f"{e}")
 
-@Client.on_message(filters.command("delete", prefixes=".") & filters.me)
+@Client.on_message(filters.command("delete", PREFIX) & filters.me)
 async def delete(client, message):
     try:
         if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:

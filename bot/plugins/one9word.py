@@ -13,7 +13,7 @@ starting_letter_pattern = r"start with ([A-Z])"
 min_length_pattern = r"include at least (\d+) letters"
 
 
-@Client.on_message(filters.command("on9", prefixes=".") & filters.me)
+@Client.on_message(filters.command("on9", PREFIX) & filters.me)
 async def one9word(client, message):
     global ONE9
     global used_words

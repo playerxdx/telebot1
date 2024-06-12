@@ -3,9 +3,12 @@ import os, time
 import requests, wget
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from info import PREFIX
 
-
-async def song(_, message):
+@Client.on_message(filters.command(['song', 'mp3'], PREFIX) & filters.me)
+async def song_cmd(_, message):
     query = ' '.join(message.command[1:])
     print(query)
     m = await message.edit(f"Searching...")
@@ -46,7 +49,8 @@ async def song(_, message):
         os.remove(audio_file)
         os.remove(thumb_name)
 
-async def vsong(client, message):
+@Client.on_message(filters.command(['video', 'mp4'], PREFIX) & filters.me)
+async def vsong_cmd(_, message: Message):
     try:
         urlissed = message.text.split(None, 1)[1] if " " in message.text else None
         if not urlissed:
