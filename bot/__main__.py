@@ -1,4 +1,4 @@
-from bot.bot import TelegramBot
+from bot import TelegramBot
 from bot.server.serve import web_server
 import asyncio
 from aiohttp import web
