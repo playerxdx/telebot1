@@ -1,7 +1,15 @@
 import asyncio
 from pyrogram import Client, filters, enums
-from bot.plugins.json import get_json
 from info import PREFIX
+import aiohttp
+
+@Client.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
+async def get_facts(message):
+    data = await get_json(f"https://nekos.life/api/v2/fact")
+    fact = data.get('fact')
+    if not fact:
+        await message.edit(f"Something went wrong!")
+    await message.edit(f"{fact}")
 
 @Client.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
 async def urban(message):
@@ -77,3 +85,8 @@ def replacetext(text):
             "",
         )
     )
+
+async def get_json(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.json()

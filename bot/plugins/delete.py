@@ -4,7 +4,7 @@ import asyncio
 from info import PREFIX
 
 # command to delete all messages
-@Client.on_message(filters.me & filters.command("clearchat", PREFIX) & filters.reply)
+@Client.on_message(filters.me & filters.command("deletechat", PREFIX) & filters.reply)
 async def clearchat(client, message):
     chat_id = message.chat.id
 

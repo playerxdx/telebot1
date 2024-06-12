@@ -23,7 +23,7 @@ async def help_cmd(_, message):
         f"`{PREFIX}spam or {PREFIX}s <number> <text>` - Spam the text\n"
         f"`{PREFIX}on9 <on | off>` - To activate One9word game cheat\n"
         f"`{PREFIX}approve` - Approve all joinRequest\n"
-        f"`{PREFIX}clearchat` - Delete all chat message from your group\n"
+        f"`{PREFIX}deletechat` - Delete all chat message from your group\n"
         f"`{PREFIX}update` - Deploy the latest changes\n"
         f"`{PREFIX}dl` - download from http url\n"
         f"`{PREFIX}hack` - Hack animation\n",
@@ -41,7 +41,7 @@ async def ping(_, message):
 action_on = False
 action_type = None
 @Client.on_message(filters.command("action", PREFIX) & filters.me)
-async def action(client, message):
+async def send_action(client, message):
     global action_on, action_type
     if len(message.text.split()) > 1:
         action_on = not action_on
@@ -84,14 +84,14 @@ async def spam_message(_, message):
             await asyncio.sleep(0.1)
 
 @Client.on_message(filters.command("restart", PREFIX) & filters.me)
-async def restart(_, message):
+async def restart_services(_, message):
     msg = await message.edit(text="**Process stoped, bot is restarting...**", chat_id=message.chat.id)       
     await asyncio.sleep(3)
     await msg.edit("**Bot restarted**")
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 @Client.on_message(filters.command("update", PREFIX) & filters.me)
-async def deploy(_, message):
+async def deploy_bot(_, message):
     m = await message.edit("Deploying the latest changes...")
     await asyncio.sleep(2)
     try:
