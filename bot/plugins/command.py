@@ -10,7 +10,7 @@ async def help_cmd(_, message):
         f"`{PREFIX}ping` - Check the bot's ping\n"
         f"`{PREFIX}urban or .ud <word>` - Get the urban dictionary meaning of the word\n"
         f"`{PREFIX}meaning or .m <word>` - Get the meaning of the word\n"
-        f"`{PREFIX}emoji or {PREFIX}e <emoji>` - To generate emoji text\n"
+        f"`{PREFIX}emoji or {PREFIX}e <text>` - To generate emoji text\n"
         f"`{PREFIX}facts or {PREFIX}f` - Get random facts\n"
         f"`{PREFIX}quotes or {PREFIX}q` - Get random quotes\n"
         f"`{PREFIX}ask or {PREFIX}a <question>` - Ask a question\n"
