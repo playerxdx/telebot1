@@ -4,7 +4,7 @@ from info import PREFIX
 import aiohttp
 
 @Client.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
-async def get_facts(message):
+async def facts(_, message):
     data = await get_json(f"https://nekos.life/api/v2/fact")
     fact = data.get('fact')
     if not fact:
@@ -12,7 +12,7 @@ async def get_facts(message):
     await message.edit(f"{fact}")
 
 @Client.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
-async def urban(message):
+async def urban(_, message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     try:
@@ -33,7 +33,7 @@ async def urban(message):
 
 
 @Client.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
-async def meaning(message):
+async def meaning(_, message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     await asyncio.sleep(2)

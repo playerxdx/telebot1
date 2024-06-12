@@ -80,7 +80,7 @@ async def spam_message(_, message):
 
 @Client.on_message(filters.command("restart", PREFIX) & filters.me)
 async def restart_services(_, message):
-    msg = await message.edit(text="**Process stoped, bot is restarting...**", chat_id=message.chat.id)       
+    msg = await message.edit(text="**Process stoped, bot is restarting...**")       
     await asyncio.sleep(3)
     await msg.edit("**Bot restarted**")
     os.execl(sys.executable, sys.executable, *sys.argv)
