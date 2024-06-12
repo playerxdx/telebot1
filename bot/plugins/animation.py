@@ -119,7 +119,6 @@ async def ily_cmd(client: Client, message: Message):
     await message.edit("❤️ I 🌹 Love 💫 You 🎉 <3 💖")
     await asyncio.sleep(3)
 
-
 hearts = {
     "1": """
     ㅤ⠀⠀⠀⠀    ⠀⢀⣤⣄
@@ -155,5 +154,12 @@ hearts = {
 
 @Client.on_message(filters.command("heart", PREFIX) & filters.me)
 async def heart_cmd(client: Client, message: Message):
-    number = message.text.split(" ")[1]
+    command = message.text.split()
+    if len(command) < 2:
+        await message.edit("Please provide a heart number.")
+        return
+    number = command[1]
+    if not number.isdigit() or int(number) not in range(1, 4):
+        await message.edit("Invalid heart number. Please choose a number between 1 and 3.")
+        return
     await message.edit(hearts.get(number, hearts["3"]))
