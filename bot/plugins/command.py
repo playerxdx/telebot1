@@ -38,45 +38,34 @@ async def ping(_, message):
     end = time.time()
     await m.edit(f"Pong! {round(end-start, 2)}s") 
 
-@Client.on_message(filters.command("update", [".", "/"]) & filters.me)
-async def deploy(_, message):
-    m = await message.edit("Deploying the latest changes...")
-    await asyncio.sleep(2)
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(DEPLOY_HOOK) as resp:
-                if resp.status == 200:
-                    await m.edit("Deploying...!")
-                else:
-                    await m.edit("Failed to deploy!")
-    except Exception as e:
-        await message.edit(f"Error: {str(e)}")    
-
-typing_on = False
-@Client.on_message(filters.command("typing", PREFIX) & filters.me)
-async def typing(client, message):
-    global typing_on
-    typing_on = not typing_on
+action_on = False
+action_type = None
+@Client.on_message(filters.command("action", PREFIX) & filters.me)
+async def action(client, message):
+    global action_on, action_type
+    if len(message.text.split()) > 1:
+        action_on = not action_on
+        action_type = message.text.split()[1]
+    else:
+        action_on = False
     await message.delete()
-    if typing_on:
+    if action_on and action_type in ['t', 'p', 's', 'cs', 'ea', 'up']:
         while True:
-            if not typing_on:
+            if not action_on:
                 break
-            await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
-            await asyncio.sleep(5)
-            
-
-playing_on = False
-@Client.on_message(filters.command("playing", PREFIX) & filters.me)
-async def playing(client, message):
-    global playing_on
-    playing_on = not playing_on
-    await message.delete()
-    if playing_on:
-        while True:
-            if not playing_on:
-                break
-            await client.send_chat_action(message.chat.id, enums.ChatAction.PLAYING)
+            if action_type == 't':
+                action = enums.ChatAction.TYPING
+            elif action_type == 'p':
+                action = enums.ChatAction.PLAYING
+            elif action_type == 's':
+                action = enums.ChatAction.SPEAKING
+            elif action_type == 'cs':
+                action = enums.ChatAction.CHOOSE_STICKER
+            elif action_type == 'ea':
+                action = enums.ChatAction.WATCH_EMOJI_ANIMATION
+            elif action_type == 'up':
+                action = enums.ChatAction.UPLOAD_PHOTO
+            await client.send_chat_action(message.chat.id, action)
             await asyncio.sleep(5)
         
 @Client.on_message(filters.command(["spam", "s"], PREFIX) & filters.me)
@@ -92,10 +81,25 @@ async def spam_message(_, message):
     if text:  # Only send messages if there's text to be spammed
         for _ in range(number_of_messages):
             await message.reply_text(text)
+            await asyncio.sleep(0.1)
 
 @Client.on_message(filters.command("restart", PREFIX) & filters.me)
-async def stop_button(bot, message):
+async def restart(_, message):
     msg = await message.edit(text="**Process stoped, bot is restarting...**", chat_id=message.chat.id)       
     await asyncio.sleep(3)
     await msg.edit("**Bot restarted**")
     os.execl(sys.executable, sys.executable, *sys.argv)
+
+@Client.on_message(filters.command("update", PREFIX) & filters.me)
+async def deploy(_, message):
+    m = await message.edit("Deploying the latest changes...")
+    await asyncio.sleep(2)
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(DEPLOY_HOOK) as resp:
+                if resp.status == 200:
+                    await m.edit("Deploying...!")
+                else:
+                    await m.edit("Failed to deploy!")
+    except Exception as e:
+        await message.edit(f"Error: {str(e)}")
