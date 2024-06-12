@@ -6,6 +6,5 @@ TelegramBot = Client(
   api_id=API_ID,
   api_hash=API_HASH,
   session_string=SESSION,
-  plugins=dict(root="bot/plugins"),
-  workers = 10
+  plugins=dict(root="bot/plugins")
 )
