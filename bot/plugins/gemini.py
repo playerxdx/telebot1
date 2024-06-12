@@ -1,5 +1,6 @@
 import google.generativeai as genai
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from info import GENAI_API_KEY, PREFIX
 from bot import TelegramBot
 
@@ -43,7 +44,7 @@ def gemini(text):
 
 
 @TelegramBot.on_message(filters.command(["ask", "a"], PREFIX) & filters.me)
-async def ask(_, message):
+async def ask(client: Client, message: Message):
     try:
         text = message.text.split(None, 1)[1]
     except IndexError:

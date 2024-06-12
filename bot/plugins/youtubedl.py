@@ -9,7 +9,7 @@ from info import PREFIX
 from bot import TelegramBot
 
 @TelegramBot.on_message(filters.command(['song', 'mp3'], PREFIX) & filters.me)
-async def song_cmd(_, message):
+async def song_cmd(client: Client, message: Message):
     query = ' '.join(message.command[1:])
     print(query)
     m = await message.edit(f"Searching...")

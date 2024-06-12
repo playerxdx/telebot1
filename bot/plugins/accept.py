@@ -1,11 +1,12 @@
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
+from pyrogram.types import Message
 import asyncio, logging
 from info import PREFIX
 from bot import TelegramBot
 
 @TelegramBot.on_message(filters.command(["run", "approve"], PREFIX) & filters.me)                     
-async def approve(client, message):
+async def approve(client: Client, message: Message):
     Id = message.chat.id
     await message.delete(True)
  

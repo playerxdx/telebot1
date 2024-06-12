@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 import requests, textwrap, aiohttp, logging, asyncio
 from io import BytesIO
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from info import PREFIX
 from bot import TelegramBot
 
@@ -88,7 +89,7 @@ async def set_profile_photo(client):
 
 # Command to change profile picture
 @TelegramBot.on_message(filters.command("pfq", PREFIX) & filters.me)
-async def change_pfp(client, message):
+async def change_pfp(client: Client, message: Message):
     try:
         m = await message.edit("Changing profile pic...")
         success = await set_profile_photo(client)
@@ -104,7 +105,7 @@ async def change_pfp(client, message):
 
         
 @TelegramBot.on_message(filters.command("imgq", PREFIX) & filters.me)
-async def image_quote(client, message):
+async def image_quote(client: Client, message: Message):
     try:
         m = await message.edit("Fetching image quote...")
         quotes = await get_quotes()
@@ -120,7 +121,7 @@ async def image_quote(client, message):
         logging.error(f"An error occurred: {e}")
 
 @TelegramBot.on_message(filters.command(["quotes", "q", "quote"], PREFIX) & filters.me)
-async def get_quote(_, message):
+async def get_quote(client: Client, message: Message):
     quotes = await get_quotes()
     await message.edit(f"{quotes}")
 

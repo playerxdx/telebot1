@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 import re, logging, random, nltk
 from info import TG_NAME, PREFIX
 from bot import TelegramBot
@@ -15,7 +16,7 @@ min_length_pattern = r"include at least (\d+) letters"
 
 
 @TelegramBot.on_message(filters.command("on9", PREFIX) & filters.me)
-async def one9word(client, message):
+async def one9word(client: Client, message: Message):
     global ONE9
     global used_words
     msg = message.text.split(None, 1)
@@ -30,7 +31,7 @@ async def one9word(client, message):
 
 
 @TelegramBot.on_message(filters.text)
-async def handle_incoming_message(client, message):
+async def handle_incoming_message(client: Client, message: Message):
     global ONE9
     global used_words
     if ONE9:

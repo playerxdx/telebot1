@@ -1,11 +1,13 @@
 import time, asyncio, aiohttp, os, sys
 from info import DEPLOY_HOOK, PREFIX
 from pyrogram import Client, filters, enums
+from pyrogram.types import Message
 from bot import TelegramBot
 
 
+
 @TelegramBot.on_message(filters.command(["help", "h"], PREFIX) & filters.me)
-async def help_cmd(_, message):
+async def help_cmd(client: Client, message: Message):
     await message.edit_text(
         f"**Commands**\n\n"
         f"`{PREFIX}ping` - Check the bot's ping\n"
@@ -33,7 +35,7 @@ async def help_cmd(_, message):
     )
 
 @TelegramBot.on_message(filters.command("ping", PREFIX) & filters.me)   
-async def ping(_, message):
+async def ping(client: Client, message: Message):
     start = time.time()  
     m = await message.edit("Pong!")
     end = time.time()
@@ -51,7 +53,7 @@ action_dict = {
 }
 
 @TelegramBot.on_message(filters.command("action", PREFIX) & filters.me)
-async def send_action(client, message):
+async def send_action(client: Client, message: Message):
     global action_on, action_type
     if len(message.text.split()) > 1:
         action_on = not action_on
@@ -65,7 +67,7 @@ async def send_action(client, message):
             await asyncio.sleep(5)
         
 @TelegramBot.on_message(filters.command(["spam", "s"], PREFIX) & filters.me)
-async def spam_message(_, message):
+async def spam_message(client: Client, message: Message):
     _, *text_parts = message.text.split()
     await message.delete()
     try:
@@ -80,14 +82,14 @@ async def spam_message(_, message):
             await asyncio.sleep(0.1)
 
 @TelegramBot.on_message(filters.command("restart", PREFIX) & filters.me)
-async def restart_services(_, message):
+async def restart_services(client: Client, message: Message):
     msg = await message.edit(text="**Process stoped, bot is restarting...**")       
     await asyncio.sleep(3)
     await msg.edit("**Bot restarted**")
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 @TelegramBot.on_message(filters.command("update", PREFIX) & filters.me)
-async def deploy_bot(_, message):
+async def deploy_bot(client: Client, message: Message):
     m = await message.edit("Deploying the latest changes...")
     await asyncio.sleep(2)
     try:

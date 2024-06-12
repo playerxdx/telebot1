@@ -1,11 +1,12 @@
 import asyncio
 from pyrogram import Client, filters, enums
+from pyrogram.types import Message
 from info import PREFIX
 import aiohttp
 from bot import TelegramBot
 
 @TelegramBot.on_message(filters.command(["facts", "f"], PREFIX) & filters.me)
-async def facts(_, message):
+async def facts(client: Client, message: Message):
     data = await get_json(f"https://nekos.life/api/v2/fact")
     fact = data.get('fact')
     if not fact:
@@ -13,7 +14,7 @@ async def facts(_, message):
     await message.edit(f"{fact}")
 
 @TelegramBot.on_message(filters.command(["urban", "ud"], PREFIX) & filters.me)
-async def urban(_, message):
+async def urban(client: Client, message: Message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     try:
@@ -34,7 +35,7 @@ async def urban(_, message):
 
 
 @TelegramBot.on_message(filters.command(["meaning", "m"], PREFIX) & filters.me)
-async def meaning(_, message):
+async def meaning(client: Client, message: Message):
     word = message.text.split(maxsplit=1)[1]
     m = await message.edit(f"**Searching for** `{word}`")
     await asyncio.sleep(2)
