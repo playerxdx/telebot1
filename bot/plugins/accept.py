@@ -1,4 +1,4 @@
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.errors import FloodWait
 import asyncio, logging
 from info import PREFIX

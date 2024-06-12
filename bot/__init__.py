@@ -1,4 +1,4 @@
-from pyrogram import Client, filters
+from pyrogram import Client
 from info import API_ID, API_HASH, SESSION
 
 TelegramBot = Client(
@@ -6,6 +6,5 @@ TelegramBot = Client(
   api_id=API_ID,
   api_hash=API_HASH,
   session_string=SESSION,
-  plugins={"root": "bot/plugins"},
   workers = 10
 )
