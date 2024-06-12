@@ -38,8 +38,17 @@ async def ping(_, message):
     end = time.time()
     await m.edit(f"Pong! {round(end-start, 2)}s") 
 
+
 action_on = False
 action_type = None
+action_dict = {
+    't': enums.ChatAction.TYPING,
+    'p': enums.ChatAction.PLAYING,
+    's': enums.ChatAction.SPEAKING,
+    'c': enums.ChatAction.CHOOSE_STICKER,
+    'u': enums.ChatAction.UPLOAD_PHOTO
+}
+
 @Client.on_message(filters.command("action", PREFIX) & filters.me)
 async def send_action(client, message):
     global action_on, action_type
@@ -49,23 +58,9 @@ async def send_action(client, message):
     else:
         action_on = False
     await message.delete()
-    if action_on and action_type in ['t', 'p', 's', 'cs', 'ea', 'up']:
-        while True:
-            if not action_on:
-                break
-            if action_type == 't':
-                action = enums.ChatAction.TYPING
-            elif action_type == 'p':
-                action = enums.ChatAction.PLAYING
-            elif action_type == 's':
-                action = enums.ChatAction.SPEAKING
-            elif action_type == 'cs':
-                action = enums.ChatAction.CHOOSE_STICKER
-            elif action_type == 'ea':
-                action = enums.ChatAction.WATCH_EMOJI_ANIMATION
-            elif action_type == 'up':
-                action = enums.ChatAction.UPLOAD_PHOTO
-            await client.send_chat_action(message.chat.id, action)
+    if action_on and action_type in action_dict:
+        while action_on:
+            await client.send_chat_action(message.chat.id, action_dict[action_type])
             await asyncio.sleep(5)
         
 @Client.on_message(filters.command(["spam", "s"], PREFIX) & filters.me)
