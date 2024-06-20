@@ -34,5 +34,5 @@ async def greet_user(client, message: Message):
     
     # Notify others if the admin is AFK
     if user_id != ADMIN and ADMIN in afk_status and user_id not in notified_users:
-        await message.reply_text(f"**My owner is currently AFK! Reason:** {afk_status[ADMIN]}")
+        await message.reply_text(f"**My owner is currently AFK!\nReason:** {afk_status[ADMIN]}")
         notified_users.add(user_id)
