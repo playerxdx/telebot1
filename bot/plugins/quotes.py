@@ -3,14 +3,21 @@ import requests, textwrap, aiohttp, logging, asyncio
 from io import BytesIO
 from pyrogram import Client, filters
 from info import PREFIX
+import random
 
 
 def add_quote_to_image(image_url, quote, output_path='output_image.jpg'):
     try:
         # Download the image from the URL
         response = requests.get(image_url)
+        # If the request was not successful, use a random fallback URL
+        if response.status_code != 200:
+            fallback_urls = [
+                'https://telegra.ph/file/8aa8b5ed1fba1f81bfbc8.jpg'
+            ]
+            response = requests.get(random.choice(fallback_urls))
+
         img = Image.open(BytesIO(response.content))
-        
         # Create a drawing object
         draw = ImageDraw.Draw(img)
         
