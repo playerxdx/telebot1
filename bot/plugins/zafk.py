@@ -13,7 +13,9 @@ async def set_afk(client, message: Message):
     if user_id == ADMIN:
         afk_reason = message.text.split(maxsplit=1)[1] if len(message.text.split()) > 1 else "No reason provided."
         afk_status[user_id] = afk_reason
-        await message.edit(f"You are now AFK: {afk_reason}")
+        m = await message.edit(f"You are now AFK: {afk_reason}")
+        await asyncio.sleep(5)
+        await m.delete()
 
 @Client.on_message(filters.text & filters.private)
 async def greet_user(client, message: Message):
@@ -22,7 +24,7 @@ async def greet_user(client, message: Message):
     # Greet new users
     if user_id not in user and user_id != ADMIN:
         user[user_id] = 1
-        await message.reply_text(f"**Hello, how can I help you?**")
+        await message.reply_text(f"Hello, How can I help you?")
     
     # Check if the admin is back from AFK
     if user_id == ADMIN and user_id in afk_status:
