@@ -105,7 +105,7 @@ async def greet_user(client, message: Message):
     user_id = message.from_user.id
     
     # Greet new users
-    if user_id not in user:
+    if user_id not in user and user_id != ADMIN:
         user[user_id] = 1
         await message.reply_text(f"Hello {message.from_user.mention}, how can I help you?")
     
