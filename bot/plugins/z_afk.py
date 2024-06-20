@@ -17,10 +17,11 @@ async def set_afk(client, message: Message):
         await asyncio.sleep(3)
         await m.delete()
 
-@Client.on_message(filters.text & filters.private & ~filters.bot)
+@Client.on_message(filters.text & filters.private)
 async def greet_user(client, message: Message):
     user_id = message.from_user.id
-    
+    if message.from_user.is_bot:
+        return
     # Greet new users
     if user_id not in user and user_id != ADMIN:
         user[user_id] = 1
