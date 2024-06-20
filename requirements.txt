@@ -9,4 +9,3 @@ youtube-search
 yt-dlp
 telegraph
 wget
-motor
