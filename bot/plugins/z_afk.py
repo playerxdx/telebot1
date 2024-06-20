@@ -29,7 +29,7 @@ async def greet_user(client, message: Message):
     # Check if the admin is back from AFK
     if user_id == ADMIN and user_id in afk_status:
         del afk_status[user_id]
-        m = await message.reply_text("Welcome back! You are no longer AFK.")
+        m = await message.reply_text("You are no longer AFK.")
         await asyncio.sleep(2)
         await m.delete()
         notified_users.clear()
