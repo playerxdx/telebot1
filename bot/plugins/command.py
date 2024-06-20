@@ -1,6 +1,7 @@
 import time, asyncio, aiohttp, os, sys
-from info import DEPLOY_HOOK, PREFIX
+from info import DEPLOY_HOOK, PREFIX, ADMIN
 from pyrogram import Client, filters, enums
+from pyrogram.types import Message
 
 @Client.on_message(filters.command(["help", "h"], PREFIX) & filters.me)
 async def help_cmd(client, message):
@@ -27,6 +28,7 @@ async def help_cmd(client, message):
         f"`{PREFIX}dl` - download from http url\n"
         f"`{PREFIX}hack` - Hack animation\n"
         f"`{PREFIX}action <t | p | s | c` - Start action\n",
+        f"`{PREFIX}afk <reason>` - Set AFK"
         parse_mode=enums.ParseMode.MARKDOWN
     )
 
@@ -36,8 +38,7 @@ async def ping(client, message):
     m = await message.edit("Pong!")
     end = time.time()
     await m.edit(f"Pong! {round(end-start, 2)}s") 
-
-
+    
 action_on = False
 action_type = None
 action_dict = {
@@ -95,3 +96,31 @@ async def deploy_bot(client, message):
                     await m.edit("Failed to deploy!")
     except Exception as e:
         await message.edit(f"Error: {str(e)}")
+
+user = {}
+afk_status = {}
+@Client.on_message(filters.text & filters.private & ~filters.bot)
+async def greet_user(client, message: Message):
+    user_id = message.from_user.id
+    if user_id not in user:
+        user[user_id] = 1
+        await message.reply_text(f"Hello {message.from_user.mention}, how can I help you?")
+    
+    # Check if the user is the admin and is currently AFK
+    if user_id == ADMIN and user_id in afk_status:
+        del afk_status[user_id]
+        m = await message.edit("Welcome back! You are no longer AFK.")
+        await asyncio.sleep(5)
+        await m.delete()
+    
+    # Notify others if the admin is AFK
+    if user_id != ADMIN and ADMIN in afk_status:
+        await message.reply_text(f"My owner is currently AFK: {afk_status[ADMIN]}")
+
+@Client.on_message(filters.command("afk", PREFIX) & filters.private & filters.me)
+async def set_afk(client, message: Message):
+    user_id = message.from_user.id
+    if user_id == ADMIN:
+        afk_reason = message.text.split(maxsplit=1)[1] if len(message.text.split()) > 1 else "No reason provided."
+        afk_status[user_id] = afk_reason
+        await message.edit(f"You are now AFK: {afk_reason}")

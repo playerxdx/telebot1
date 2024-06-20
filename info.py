@@ -7,3 +7,4 @@ GENAI_API_KEY = os.getenv("GENAI_API_KEY") # Get it from https://makersuit.googl
 TG_NAME = os.getenv("TG_NAME") # Your Telegram Name (Needed if you wanna use One9word plugins)
 DEPLOY_HOOK = os.getenv("DEPLOY_HOOK") # Get it from render.com if you are hosting this bot to RENDER 
 PREFIX = os.getenv("PREFIX", ".") # Command Prefix 
+ADMIN = int(os.environ("ADMIN")) # Admin ID
